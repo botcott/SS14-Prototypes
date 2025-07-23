@@ -1,0 +1,8 @@
+uploadfolder botcott/Spiderops/Clothing/Hardsuits/Basic/spihelmet.rsi
+uploadfolder botcott/Spiderops/Clothing/Hardsuits/Basic/spihardsuit.rsi
+uploadfolder botcott/Spiderops/Clothing/spicombat.rsi
+uploadfolder botcott/Spiderops/Weapons/spikatana.rsi
+uploadfolder botcott/Spiderops/Weapons/spikatana-inhands.rsi
+uploadfolder botcott/Spiderops/Clothing/spimask.rsi
+uploadfolder botcott/Spiderops/Clothing/spiback.rsi
+uploadfolder botcott/Spiderops/Weapons/spigrenade.rsi

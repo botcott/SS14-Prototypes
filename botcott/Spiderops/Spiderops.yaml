@@ -1,0 +1,307 @@
+- type: entity
+  parent: [ ClothingHeadHardsuitBase, ClothingHeadSuitWithLightBase ]
+  id: ClothingHeadHelmetSpiderOps
+  name: тёмно-серый шлем
+  description: Легкобронированный шлем для работы на.... бирка со знаком синдиката на спине.
+  components:
+  - type: Sprite
+    sprite: /Uploaded/botcott/Spiderops/Clothing/Hardsuits/Basic/spihelmet.rsi
+  - type: Clothing
+    sprite: /Uploaded/botcott/Spiderops/Clothing/Hardsuits/Basic/spihelmet.rsi
+  - type: PointLight
+    color: green
+  - type: PressureProtection
+    highPressureMultiplier: 0.08
+    lowPressureMultiplier: 1000
+
+- type: entity
+  parent: BasePowerCell
+  id: PowerCellMicroreactorSpiderOps
+  name: микрореакторная батарея
+  description: Стандартизированный перезаряжаемый микрореактор. Имеет пониженную ёмкость, но очень медленно заряжается сам по себе.
+  suffix: Полный, Пауки
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.PowerCellVisualLayers.Base" ]
+      state: microreactor
+    - map: [ "enum.PowerCellVisualLayers.Unshaded" ]
+      state: o2
+      shader: unshaded
+  - type: Battery
+    maxCharge: 200 # 20 seconds
+    startingCharge: 200
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 5
+
+- type: entity
+  parent: [ClothingOuterBaseLarge, AllowSuitStorageClothing, BaseToggleClothing, BaseMajorContraband]
+  id: ClothingOuterSuitSpiderOps
+  name: тёмно-серый скафандр
+  description: Легкобронированный костюм для работы на.... бирка со знаком синдиката на спине.
+  components:
+  - type: Sprite
+    sprite: /Uploaded/botcott/Spiderops/Clothing/Hardsuits/Basic/spihardsuit.rsi
+  - type: Clothing
+    sprite: /Uploaded/botcott/Spiderops/Clothing/Hardsuits/Basic/spihardsuit.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.05
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6
+        Slash: 0.6
+        Piercing: 0.5
+        Heat: 0.6
+        Radiation: 0.6
+        Caustic: 0.6
+        Stun: 0.65 # Default nukeops hardsuit, but -10%
+  - type: HeldSpeedModifier
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.1
+  - type: HardsuitIdentification
+  - type: Speech
+  - type: TTS
+    voice: Kate
+  - type: Tag
+    tags:
+    - Hardsuit
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetSpiderOps
+  # phase cloak
+  - type: ToggleClothing
+    action: ActionTogglePhaseCloak
+    disableOnUnequip: true
+  - type: ComponentToggler
+    parent: true
+    components:
+    - type: Stealth
+      minVisibility: 0.1
+      lastVisibility: 0.1
+  - type: PowerCellDraw
+    drawRate: 15 # 100 seconds on the default cell
+  - type: ToggleCellDraw
+  - type: UseDelay
+    delay: 10 # disable time
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+  - type: ContainerContainer
+    containers:
+      cell_slot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMicroreactorSpiderOps
+        disableEject: true
+        whitelist:
+          tags:
+            - PowerCell
+
+- type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsGlovesCombatSpiderOps
+  name: боевые сине-зелёные перчатки
+  description: Укреплённые перчатки из высокопрочных материалов, обеспечивающие защиту в работе с опасными объектами.
+  components:
+  - type: Sprite
+    sprite: /Uploaded/botcott/Spiderops/Clothing/spicombat.rsi
+  - type: Clothing
+    sprite: /Uploaded/botcott/Spiderops/Clothing/spicombat.rsi
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesPNVSpiderOps
+  name: прибор ночного видения оперативника
+  description: Данный ПНВ имеет несколько встроенных функций как система * свой-чужой *, мед-визор и другие для облегчения наре... Уничтожения гуманоидов.
+  suffix: ПНВ, Синдикат, Пауки
+  components:
+  - type: Sprite
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
+    scale: 0.7, 0.7 # bad practice, don't do it
+  - type: Clothing
+    sprite: _DeadSpace/Clothing/Eyes/Hud/pnv-synd.rsi
+  - type: FlashImmunity
+  - type: ShowCriminalRecordIcons
+  - type: ShowJobIcons
+  - type: ShowMindShieldIcons
+  - type: ShowHealthIcons
+  - type: ShowHealthBars
+  - type: EyeProtection
+  - type: NightVisionClothing
+    color: "#41af0e"
+
+- type: entity
+  name: лазерная катана
+  parent: [BaseMeleeWeaponEnergy, BaseSyndicateContraband]
+  id: EnergyKatanaSpiderOps
+  description: Выглядит как настоящая катана из мультфильмов.
+  components:
+  - type: Sprite
+    sprite: /Uploaded/botcott/Spiderops/Weapons/spikatana.rsi
+    layers:
+    - state: e_spider_sword
+    - state: e_sword_blade
+      color: "#FFFFFF"
+      visible: false
+      shader: unshaded
+      map: [ "blade" ]
+  - type: Item
+    sprite: /Uploaded/botcott/Spiderops/Weapons/spikatana-inhands.rsi
+  - type: ItemToggleMeleeWeapon
+    activatedDamage:
+      types:
+        Slash: 17
+        Heat: 13
+        Structural: 20
+        Caustic: 3
+
+- type: entity
+  parent: [ClothingMaskGas, BaseSyndicateContraband]
+  id: ClothingMaskGasSpiderOps
+  name: серый боевой противогаз
+  description: Перекрашенный боевой противогаз, в отличии от своей оригинальной версии оснащён дополнительными защитными пластинами, а также технологией смены голоса.
+  components:
+  - type: VoiceMask
+  - type: Sprite
+    sprite: /Uploaded/botcott/Spiderops/Clothing/spimask.rsi
+  - type: Clothing
+    sprite: /Uploaded/botcott/Spiderops/Clothing/spimask.rsi
+  - type: FlashImmunity
+  - type: EyeProtection
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.9
+  - type: UserInterface
+    interfaces:
+      enum.VoiceMaskUIKey.Key:
+        type: VoiceMaskBoundUserInterface
+
+- type: entity
+  parent: [ ClothingBackpack, BaseCentcommContraband ]
+  id: ClothingBackpackSpiderOps
+  name: чёрная большая сумка
+  description: Чёрная сумка с увеличенными карманами для переноса большого количества вооружения, внутри запах аномальной свежести.
+  components:
+  - type: Sprite
+    sprite: /Uploaded/botcott/Spiderops/Clothing/spiback.rsi
+  - type: Storage
+    grid:
+    - 0,0,9,9
+  - type: ExplosionResistance # DS14
+    damageCoefficient: 0.5
+
+- type: entity
+  parent: [ScatteringGrenadeBase, BaseSyndicateContraband]
+  id: ClusterGrenadeSpiderOps
+  name: улучшенный странный механизм
+  description: Крайне странное устройство с таймером и переключателями, выглядит не очень безопасно. На ней видно бирку "Only for spiders".
+  components:
+  - type: Sprite
+    sprite: /Uploaded/botcott/Spiderops/Weapons/spigrenade.rsi
+    layers:
+    - state: icon
+      map: ["enum.TriggerVisualLayers.Base"]
+  - type: ScatteringGrenade
+    fillPrototype: GrenadeSpiderOps
+    distance: 4
+  - type: OnUseTimerTrigger
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 0.5
+    delay: 3.5
+    delayOptions: [3.5, 5, 10, 30, 60, 120, 300]
+  - type: EmitSoundOnTrigger
+    sound:
+      path: "/Audio/Machines/door_lock_off.ogg"
+
+- type: entity
+  name: странный механизм
+  description: Крайне странное устройство с таймером и переключателями, выглядит не очень безопасно.
+  parent: [GrenadeBase, BaseSyndicateContraband]
+  id: GrenadeSpiderOps
+  components:
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 10
+    intensitySlope: 3
+    totalIntensity: 240
+    canCreateVacuum: false
+  - type: OnUseTimerTrigger
+    delay: 3.5
+    delayOptions: [3.5, 5, 10, 30, 60, 120, 300]
+    beepSound:
+      path: "/Audio/Effects/beep1.ogg"
+      params:
+        volume: 5
+    initialBeepDelay: 0
+    beepInterval: 2 # 2 beeps total (at 0 and 2)
+  - type: Sprite
+    sprite: /Uploaded/botcott/Spiderops/Weapons/spigrenade.rsi
+  - type: GenericVisualizer
+    visuals:
+      enum.Trigger.TriggerVisuals.VisualState:
+        enum.ConstructionVisuals.Layer:
+          Primed: { state: icon }
+          Unprimed: { state: icon }
+
+- type: startingGear
+  id: SpiderOperativeGearFull
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackSpiderOps
+    mask: ClothingMaskGasSpiderOps
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombatSpiderOps
+    outerClothing: ClothingOuterSuitSpiderOps
+    shoes: ClothingShoesBootsCombatFilled
+    id: SyndiPDA
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: ClusterGrenadeSpiderOps
+    belt: ClothingBeltMilitaryWebbing
+  storage:
+    back:
+    - WeaponSubMachineGunKangTao
+
+# - type: startingGear
+#   id: SpiderOpsGearFull
+#   equipment:
+#     jumpsuit: ClothingUniformJumpsuitOperative
+#     back: ClothingBackpackDuffelSyndicate
+#     # back: ClothingBackpackSpiderOps
+#     mask: ClothingMaskGasSpiderOps
+#     eyes: ClothingEyesVisorSpiderOps
+#     ears: ClothingHeadsetAltSyndicate
+#     gloves: ClothingHandsGlovesCombatSpiderOps
+#     outerClothing: ClothingOuterSuitSpiderOps
+#     shoes: ClothingShoesBootsCombatFilled
+#     id: SyndiPDA
+#     pocket1: DoubleEmergencyOxygenTankFilled
+#     pocket2: ClusterGrenadeSpiderOps
+#     belt: ClothingBeltMilitaryWebbing
+#   storage:
+#     back:
+#     - PinpointerSyndicateNuclear
+  #   - DeathAcidifierImplanter
+    # - MagazinePistolSubMachineGunIncendiary
+  #   - MagazinePistolSubMachineGunIncendiary
+  #   - MagazinePistolSubMachineGunIncendiary
+  #   - MagazinePistolSubMachineGunIncendiary
+  #   - MagazinePistolSubMachineGunIncendiary
+  #   - MagazinePistolSubMachineGunIncendiary
+  #   - MagazinePistolSubMachineGunIncendiary
+  #   - MagazinePistolSubMachineGunIncendiary
+  #   - WeaponSubMachineGunKangTao
